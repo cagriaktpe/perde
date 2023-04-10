@@ -28,9 +28,9 @@ class Movie(models.Model):
     director = models.ForeignKey(Director, on_delete=models.CASCADE, related_name='movies')
     actors = models.ManyToManyField(Actor, related_name='movies')
     runtime = models.IntegerField()
-    poster = models.CharField(max_length=100)
-    trailer = models.CharField(max_length=100, null=True)
-    link = models.CharField(max_length=100, null=True)
+    poster = models.CharField(max_length=200)
+    trailer = models.CharField(max_length=200, null=True)
+    link = models.CharField(max_length=200, null=True)
 
     def __str__(self):
         return self.title

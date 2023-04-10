@@ -16,6 +16,10 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 
+import HomeApp.views
+
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('', HomeApp.views.home, name='home'),
+    path('movie/<str:movie_name>', HomeApp.views.movie, name='movie'),
 ]

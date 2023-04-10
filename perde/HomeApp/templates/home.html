@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% block content %}
+<div>
+        <h1>Welcome to Perde!</h1>
+
+        <ul>
+        {% for movie in movies %}
+            <a href="{% url 'movie' movie.title %}">
+                <li>
+                    <p>{{ movie.title }}</p>
+                    <img class="home-img" src="{{ movie.poster }}" alt="{{ movie.title }}">
+                </li>
+            </a>
+        {% endfor %}
+        </ul>
+</div>
+{% endblock %}
