@@ -22,4 +22,6 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', HomeApp.views.home, name='home'),
     path('movie/<str:movie_name>', HomeApp.views.movie, name='movie'),
+    path('register/',HomeApp.views.RegisterView.as_view(), name='register'),
+    path('login',HomeApp.views.LoginInterfaceView.as_view()),
 ]
