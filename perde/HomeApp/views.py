@@ -2,7 +2,7 @@ from django.shortcuts import render
 from django.views.generic.edit import CreateView
 from .models import Movie
 from django.contrib.auth.forms import UserCreationForm
-from django.contrib.auth.views import LoginView
+from django.contrib.auth.views import LoginView, LogoutView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import redirect
 
@@ -10,6 +10,8 @@ from django.shortcuts import redirect
 class LoginInterfaceView(LoginView):
     template_name = 'login.html'
 
+class LogoutInterfaceView(LogoutView):
+    template_name = 'logout.html'
 
 class RegisterView(CreateView):
     form_class = UserCreationForm

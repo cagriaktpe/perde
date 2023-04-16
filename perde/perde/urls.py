@@ -23,5 +23,6 @@ urlpatterns = [
     path('', HomeApp.views.home, name='home'),
     path('movie/<str:movie_name>', HomeApp.views.movie, name='movie'),
     path('register/',HomeApp.views.RegisterView.as_view(), name='register'),
-    path('login',HomeApp.views.LoginInterfaceView.as_view()),
+    path('login',HomeApp.views.LoginInterfaceView.as_view(),name='login'),
+    path('logout',HomeApp.views.LogoutInterfaceView.as_view(),name='logout'),
 ]
