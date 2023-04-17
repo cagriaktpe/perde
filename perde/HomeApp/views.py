@@ -1,26 +1,25 @@
-from django.shortcuts import render
-from django.views.generic.edit import CreateView
-from .models import Movie
+from django.shortcuts import render, redirect
+from django.http import HttpResponse
+from django.forms import inlineformset_factory
 from django.contrib.auth.forms import UserCreationForm
-from django.contrib.auth.views import LoginView, LogoutView
-from django.contrib.auth.mixins import LoginRequiredMixin
-from django.shortcuts import redirect
+from django.views.generic.edit import CreateView
+from django.contrib.auth import authenticate, login, logout
+from .models import Movie
+from .models import *
+from .forms import CreateUserForm
 
 
-class LoginInterfaceView(LoginView):
-    template_name = 'login.html'
+def registerPage(request):
+    form = CreateUserForm()
+    if request.method == 'POST':
+        form = CreateUserForm(request.POST)
+        if form.is_valid():
+            form.save()
+    return render(request,'register.html',{'form':form})
 
-class LogoutInterfaceView(LogoutView):
-    template_name = 'logout.html'
+def loginPage(request):
+    return render(request,'login.html',{})
 
-class RegisterView(CreateView):
-    form_class = UserCreationForm
-    template_name = 'register.html'
-
-    def get(self, request, *args, **kwargs):
-        if self.request.user.is_authenticated:
-            return redirect('HomeApp')
-        return super().get(request,*args,**kwargs)
 def home(request):
     return render(request, 'home.html', {'movies': Movie.objects.all()})
 
