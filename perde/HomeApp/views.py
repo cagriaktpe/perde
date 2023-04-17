@@ -47,8 +47,9 @@ def login(request):
             user = authenticate(username=username, password=password)
 
             if user is None:
-                messages.info(request, f"You are now logged in as {username}")
+                messages.info(request, 'Username or password is incorrect')
                 return render(request, 'login.html', {'form': form})
+
             auth_login(request, user)
             messages.info(request, f"You are now logged in as {username}")
 
