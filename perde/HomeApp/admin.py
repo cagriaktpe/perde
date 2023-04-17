@@ -1,17 +1,12 @@
 from django.contrib import admin
 
-from .models import Movie, User, Rating, Watchlist, Comment, Genre, Director, Actor
+from .models import Movie, Rating, Watchlist, Comment, Genre, Director, Actor
 
 @admin.register(Movie)
 class MovieAdmin(admin.ModelAdmin):
     list_display = ('title', 'year', 'rating')
     list_filter = ('year', 'rating')
     search_fields = ('title', 'year', 'rating')
-
-@admin.register(User)
-class UserAdmin(admin.ModelAdmin):
-    list_display = ('username', 'email')
-    search_fields = ('username', 'email')
 
 @admin.register(Rating)
 class RatingAdmin(admin.ModelAdmin):
