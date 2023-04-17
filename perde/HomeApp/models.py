@@ -35,28 +35,21 @@ class Movie(models.Model):
     def __str__(self):
         return self.title
 
-class User(models.Model):
-    username = models.CharField(max_length=100)
-    password = models.CharField(max_length=100)
-    email = models.CharField(max_length=100)
-    def __str__(self):
-        return self.username
-
 class Rating(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    user = models.ForeignKey('auth.User', on_delete=models.CASCADE, verbose_name='User')
     movie = models.ForeignKey(Movie, on_delete=models.CASCADE, related_name='ratings')
     rating = models.IntegerField()
     def __str__(self):
         return str(self.rating)
 
 class Watchlist(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    user = models.ForeignKey('auth.User', on_delete=models.CASCADE, verbose_name='User')
     movies = models.ManyToManyField(Movie, related_name='watchlists')
     def __str__(self):
         return self.user.username
 
 class Comment(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    user = models.ForeignKey('auth.User', on_delete=models.CASCADE, verbose_name='User')
     movie = models.ForeignKey(Movie, on_delete=models.CASCADE)
     comment = models.TextField()
     def __str__(self):
