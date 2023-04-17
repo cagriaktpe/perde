@@ -20,7 +20,6 @@ def register(request):
             username = form.cleaned_data.get('username')
             email = form.cleaned_data.get('email')
             password = form.cleaned_data.get('password1')
-
             if User.objects.filter(username=username).exists():
                 messages.info(request, 'Username already exists')
                 return render(request, 'register.html', {'form': form})
@@ -29,7 +28,7 @@ def register(request):
             newUser.save()
 
             auth_login(request, newUser)
-
+            
             messages.info(request, f"You are now logged in as {username}")
 
             return redirect('home')
@@ -48,7 +47,7 @@ def login(request):
             user = authenticate(username=username, password=password)
 
             if user is None:
-                raise forms.ValidationError('Username or password is incorrect')
+                messages.info(request, f"You are now logged in as {username}")
                 return render(request, 'login.html', {'form': form})
             auth_login(request, user)
             messages.info(request, f"You are now logged in as {username}")

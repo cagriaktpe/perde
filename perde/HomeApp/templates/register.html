@@ -108,7 +108,12 @@
 				   		</div>
 					</form>
 				</div>
-		
+
+
+
+				{{form.errors}}
+				{% include 'messages.html' %}
+				{% block content %} {% endblock content %}
 				<div class="mt-4">
 					<div class="d-flex justify-content-center links">
 						Already have an account? <a href="{% url 'login' %}" class="ml-2">Login</a>
