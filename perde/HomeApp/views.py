@@ -48,10 +48,9 @@ def login(request):
 
             if user is None:
                 messages.info(request, f"You are now logged in as {username}")
-                return render(request, 'login.html', {'form': form})
+                #return render(request, 'login.html', {'form': form})
             auth_login(request, user)
-            messages.info(request, f"You are now logged in as {username}")
-
+            #messages.info(request, f"You are now logged in as {username}")
             return redirect('home')
 
     context = {'form': form}
