@@ -1,17 +1,22 @@
 {% extends 'base.html' %}
 {% block content %}
-<div>
-        <h1>Welcome to Perde!</h1>
+<ul>
+    {% for movie in movies %}
+    <div class="card m-2 p-1"  style="width: 18rem;">
+        <img src="{{ movie.poster }}" class="card-img-top" alt="{{ movie.title }}">
+        <div class="card-body">
+            <h5 class="card-title"> {{ movie.title }}</h5>
 
-        <ul>
-        {% for movie in movies %}
-            <a href="{% url 'movie' movie.title %}">
-                <li>
-                    <p>{{ movie.title }}</p>
-                    <img class="home-img" src="{{ movie.poster }}" alt="{{ movie.title }}">
-                </li>
-            </a>
-        {% endfor %}
-        </ul>
-</div>
+
+            <a href="{% url 'movie' movie.title %}" class="btn btn-primary">Filmi incele</a>
+
+        </div>
+    </div>
+
+    {% endfor %}
+
+</ul>
+
+
+
 {% endblock %}

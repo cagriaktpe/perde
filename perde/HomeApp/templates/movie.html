@@ -4,7 +4,7 @@
     <iframe id="video" width="420" height="315"
         src="https://www.youtube.com/embed/{{movie.trailer}}?autoplay=1&mute=1">
     </iframe>
-
+    
     <div>
         <button onclick="switchVideo('fragman')">Fragman</button>
         <button onclick="switchVideo('movie')">Movie</button>
@@ -36,6 +36,7 @@
                 document.getElementById("video").src = "https://www.youtube.com/embed/{{movie.trailer}}?autoplay=1&mute=1";
             } else if (status == "movie") {
                 document.getElementById("video").src = "https://www.youtube.com/embed/{{movie.link}}?autoplay=1&mute=1";
+                
             }
         }
     </script>
