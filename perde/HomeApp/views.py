@@ -49,6 +49,12 @@ def login(request):
             if user is None:
                 messages.info(request, 'Username or password is incorrect')
                 return render(request, 'login.html', {'form': form})
+<<<<<<< HEAD
+=======
+
+            auth_login(request, user)
+            messages.info(request, f"You are now logged in as {username}")
+>>>>>>> afadd0266c2e7864b07f4369d53ae073a0d8482b
 
             auth_login(request, user)
             #messages.info(request, f"You are now logged in as {username}")
