@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+
+
+<head>
+    <style>
+        table {
+        width: 100%;
+        }
+    </style>
+
+</head>
+
+
+{% extends 'base.html' %}
+{% block content %}
+<h1 align ="center ">Search Movie Info </h1>
+
+<form method = "get">
+    {{filters.form}}
+    <input type="submit" value= "Search" name="" >
+
+</form>
+
+<hr>
+
+<form method="get">
+<table border = "1">
+    <tr>
+        <td>Title </td>
+        <td>Director</td>
+        <td>Genre</td>
+        <td>Year</td>
+        <td>Rating</td>
+    </tr>
+{% for item in filters.qs %}
+    <tr>
+        <td><a href="/movie/{{item.title}}">{{item.title}}</a></td>
+        <td>{{item.director}}</td>
+        <td>{% for genre in item.genre.all %}
+            {{ genre.name }}
+            {% if not forloop.last %},{% endif %}
+        {% endfor %}</td>
+        <td>{{item.year}}</td>
+        <td>{{item.rating}}</td>
+    </tr>
+{% endfor %}
+</table>
+
+
+
+</form>
+{% endblock %}
+
+</html>

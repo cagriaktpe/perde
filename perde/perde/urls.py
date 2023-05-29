@@ -25,5 +25,7 @@ urlpatterns = [
     path('register/', HomeApp.views.register, name='register'),
     path('login/', HomeApp.views.login, name='login'),
     path('logout/', HomeApp.views.logout, name='logout'),
-]
+    path('searchMovie/',HomeApp.views.searchMovie, name= 'searchMovie'),
+    path('searchMovie/movies/', HomeApp.views.movie, name='movie'),
 
+]

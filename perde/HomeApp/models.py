@@ -31,7 +31,7 @@ class Movie(models.Model):
     poster = models.CharField(max_length=200)
     trailer = models.CharField(max_length=200, null=True)
     link = models.CharField(max_length=200, null=True)
-
+    
     def __str__(self):
         return self.title
 
