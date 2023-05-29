@@ -35,7 +35,7 @@
     </tr>
 {% for item in filters.qs %}
     <tr>
-        <td>{{item.title}}</td>
+        <td><a href="/movie/{{item.title}}">{{item.title}}</a></td>
         <td>{{item.director}}</td>
         <td>{% for genre in item.genre.all %}
             {{ genre.name }}
