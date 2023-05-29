@@ -10,8 +10,8 @@ class RegisterForm(forms.Form):
         cleaned_data = super().clean()
         password1 = cleaned_data.get('password1')
         password2 = cleaned_data.get('password2')
-        if password1 != password2:
-            raise forms.ValidationError('Passwords do not match')
+    
+            
 
 class LoginForm(forms.Form):
     username = forms.CharField(max_length=100, label='Username')

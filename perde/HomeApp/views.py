@@ -1,9 +1,18 @@
+import re
 from .models import Movie
 from .forms import RegisterForm, LoginForm
 from django.shortcuts import render, redirect
 from django.contrib.auth.models import User
 from django.contrib.auth import login as auth_login, authenticate, logout as auth_logout
 from django.contrib import messages
+from .filters import FilterMovie
+
+def searchMovie(request):
+    movie = Movie.objects.all()
+    filters = FilterMovie(request.GET, queryset= movie)
+    context = {'filters': filters }
+    return render(request,'searchMovie.html',context)
+
 
 def home(request):
     return render(request, 'home.html', {'movies': Movie.objects.all()})
@@ -20,6 +29,12 @@ def register(request):
             username = form.cleaned_data.get('username')
             email = form.cleaned_data.get('email')
             password = form.cleaned_data.get('password1')
+            password2 = form.cleaned_data.get('password2')
+
+            if password != password2:
+                messages.info(request, 'The passwords do not match')  
+                return render(request, 'register.html', {'form': form})
+
             if User.objects.filter(username=username).exists():
                 messages.info(request, 'Username already exists')
                 return render(request, 'register.html', {'form': form})
@@ -29,8 +44,6 @@ def register(request):
 
             auth_login(request, newUser)
             
-            messages.info(request, f"You are now logged in as {username}")
-
             return redirect('home')
 
     context = {'form': form}
@@ -51,7 +64,6 @@ def login(request):
                 return render(request, 'login.html', {'form': form})
 
             auth_login(request, user)
-            messages.info(request, f"You are now logged in as {username}")
 
             return redirect('home')
 
