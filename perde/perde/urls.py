@@ -27,5 +27,6 @@ urlpatterns = [
     path('logout/', HomeApp.views.logout, name='logout'),
     path('searchMovie/',HomeApp.views.searchMovie, name= 'searchMovie'),
     path('searchMovie/movies/', HomeApp.views.movie, name='movie'),
-
+    path('add-comment/<str:movie_name>', HomeApp.views.add_comment, name='add-comment'),
+    path('delete-comment/<str:movie_name>/', HomeApp.views.delete_comment, name='delete-comment'),
 ]

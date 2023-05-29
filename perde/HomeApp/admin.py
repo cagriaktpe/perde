@@ -22,9 +22,9 @@ class WatchlistAdmin(admin.ModelAdmin):
 
 @admin.register(Comment)
 class CommentAdmin(admin.ModelAdmin):
-    list_display = ('user', 'movie', 'comment')
-    list_filter = ('user', 'movie')
-    search_fields = ('user', 'movie')
+    list_display = ('user', 'movie', 'comment', 'created_date')
+    list_filter = ('user', 'movie', 'created_date')
+    search_fields = ('user', 'movie', 'created_date')
 
 @admin.register(Genre)
 class GenreAdmin(admin.ModelAdmin):

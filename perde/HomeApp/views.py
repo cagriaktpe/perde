@@ -19,7 +19,9 @@ def home(request):
 
 def movie(request, movie_name):
     movie_name = movie_name.lower().capitalize()
-    return render(request, 'movie.html', {'movie': Movie.objects.get(title=movie_name)})
+    comments = Movie.objects.get(title=movie_name).comments.all()
+
+    return render(request, 'movie.html', {'movie': Movie.objects.get(title=movie_name), 'comments': comments})
 
 def register(request):
     form = RegisterForm()
@@ -74,3 +76,21 @@ def logout(request):
     auth_logout(request)
     messages.info(request, 'Logged out successfully!')
     return redirect('home')
+
+def add_comment(request, movie_name):
+    movie_name = movie_name.lower().capitalize()
+    movie = Movie.objects.get(title=movie_name)
+    comment = request.POST.get('comment')
+
+    if movie.comments.filter(user=request.user).exists():
+        movie.comments.filter(user=request.user).update(comment=comment)
+    else:
+        movie.comments.create(user=request.user, comment=comment)
+    return redirect('movie', movie_name=movie_name)
+
+def delete_comment(request, movie_name):
+    movie_name = movie_name.lower().capitalize()
+    movie = Movie.objects.get(title=movie_name)
+    movie.comments.filter(user=request.user).delete()
+    return redirect('movie', movie_name=movie_name)
+    
