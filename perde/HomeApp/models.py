@@ -50,10 +50,14 @@ class Watchlist(models.Model):
 
 class Comment(models.Model):
     user = models.ForeignKey('auth.User', on_delete=models.CASCADE, verbose_name='User')
-    movie = models.ForeignKey(Movie, on_delete=models.CASCADE)
+    movie = models.ForeignKey(Movie, on_delete=models.CASCADE, related_name='comments')
     comment = models.TextField()
+    created_date = models.DateTimeField(auto_now_add=True)
+
     def __str__(self):
         return self.comment
+
+
 
 
 
