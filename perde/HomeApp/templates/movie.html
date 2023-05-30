@@ -87,6 +87,22 @@
                 {% else %}
                     <p>No comments yet</p>
                 {% endif %}
+        
+                <h3>Ratings</h3>
+                {% if movie.ratings.all %}
+                {% for rating in movie.ratings.all %}
+                    <div>
+                        <p>
+                            <b>{{rating.user}}: </b>{{rating.rating}}
+                            
+                        </p>
+                        <hr>
+                    </div>
+                {% endfor %}
+                {% else %}
+                    <p>No ratings yet</p>
+                {% endif %}
+
     
                 {% if user.is_authenticated %}
     
@@ -98,7 +114,17 @@
                         <br>
                         <input type="submit" value="Add Comment">
                     </div>
-                    </form>  
+                    </form>
+                    
+                    <h3>Rating</h3>
+                    <form action="{% url 'rate' movie.title %}" method="POST">
+                    {% csrf_token %}
+                    <div>
+                        <input type="number" name="rating" id="rating" min="1" max="5">
+                        <br>
+                        <input type="submit" value="Rate">
+                    </div>
+                    </form> 
     
                 {% else %}
                     <a href="{% url 'login' %}">Login to add comment</a>

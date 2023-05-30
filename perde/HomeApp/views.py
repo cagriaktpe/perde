@@ -131,4 +131,14 @@ def delete_comment(request, movie_name):
 
 def aboutus(request):
     return render(request, 'about.html')
-    
+
+def rate(request, movie_name):
+    movie_name = movie_name.lower().capitalize()
+    movie = Movie.objects.get(title=movie_name)
+    rate = request.POST.get('rating')
+
+    if movie.ratings.filter(user=request.user).exists():
+        movie.ratings.filter(user=request.user).update(rating=rate)
+    else:
+        movie.ratings.create(user=request.user, rating=rate)
+    return redirect('movie', movie_name=movie_name)
