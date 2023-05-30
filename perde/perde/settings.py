@@ -27,7 +27,7 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
-
+AUTH_PROFILE_MODULE = 'perde.UserProfile'
 # Application definition
 
 INSTALLED_APPS = [
