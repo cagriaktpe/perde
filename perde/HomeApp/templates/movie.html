@@ -110,7 +110,7 @@
                     <form action="{% url 'add-comment' movie.title %}" method="POST">
                     {% csrf_token %}
                     <div>
-                        <textarea name="comment" id="comment" cols="30" rows="10"></textarea>
+                        <textarea name="comment" id="comment" cols="30" rows="5"></textarea>
                         <br>
                         <input type="submit" value="Add Comment">
                     </div>
