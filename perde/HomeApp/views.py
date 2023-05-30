@@ -93,4 +93,7 @@ def delete_comment(request, movie_name):
     movie = Movie.objects.get(title=movie_name)
     movie.comments.filter(user=request.user).delete()
     return redirect('movie', movie_name=movie_name)
+
+def aboutus(request):
+    return render(request, 'about.html')
     

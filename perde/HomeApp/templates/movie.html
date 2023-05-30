@@ -1,88 +1,84 @@
 {% extends 'base.html' %}
 {% block content %}
-    
-    <iframe id="video" width="420" height="315"
-        src="https://www.youtube.com/embed/{{movie.trailer}}?autoplay=1&mute=1">
-    </iframe>
-
-    <div>
-        <button onclick="switchVideo('fragman')">Fragman</button>
-        <button onclick="switchVideo('movie')">Movie</button>
-    </div>
-    
-    <div>
-        <h1>{{movie.title}}</h1>
-        <h2>Rating: {{movie.rating}}</h2>
-        <img class="home-img" src="{{movie.poster}}" alt="{{movie.title}}">
-        <div>
-            <div>Release year: {{movie.year}}</div>
-            <div>Duration: {{movie.runtime}}</div>
-            <div>Rating: {{movie.rating}}</div>
-            <div>Genre: {{movie.Genre}}</div>
-            
-        </div>
-        <div>
-            <div>Director: {{movie.director}}</div>
-            <div>Actors: 
-                {% for actor in movie.actors.all%}
-                    {{actor.name}}{% if not forloop.last %}, {% endif %}
-                {% endfor %}
+<!-- width="420" height="315" -->
+<div class="container">
+    <div class="row ">
+        <div class="col-12 ">
+            <div class="row">
+                <iframe id="video" src="https://www.youtube.com/embed/{{movie.trailer}}?autoplay=1&mute=1" width="600px"
+                    height="500px">
+                </iframe>
             </div>
-            <p>{{movie.description}}</p>
+            <div class="row mt-1 p-2">
+                <div class="col-6"><button type="button" class="btn btn-primary float-end"
+                        onclick="switchVideo('fragman')">Fragman</button></div>
+                <div class="col-6"><button type="button" class="btn btn-primary"
+                        onclick="switchVideo('movie')">Movie</button></div>
+            </div>
         </div>
-
-        <div>
-            <h3>Comments</h3>
-            
-            {% if movie.comments.all %}
-            {% for comment in movie.comments.all %}
-                <div>
-                    <p>
-                        <b>{{comment.user}}: </b>{{comment.comment}} - {{comment.created_date}}
-                        {% if user.is_authenticated %}
-                            {% if user == comment.user %}
-                                <a href="{% url 'delete-comment' movie.title %}">Delete</a>
-                            {% endif %}
-                        {% endif %}
-                    </p>
-                    <hr>
-                </div>
-            {% endfor %}
-            {% else %}
-                <p>No comments yet</p>
-            {% endif %}
-
-            {% if user.is_authenticated %}
-            
-                <h3>Add Comment</h3>
-                <form action="{% url 'add-comment' movie.title %}" method="POST">
-                {% csrf_token %}
-                <div>
-                    <textarea name="comment" id="comment" cols="30" rows="10"></textarea>
-                    <br>
-                    <input type="submit" value="Add Comment">
-                </div>
-                </form>  
-                
-            {% else %}
-                <a href="{% url 'login' %}">Login to add comment</a>
-            {% endif %}
-            
-            
-
-
-            
     </div>
+    <div class="row">
+        <div class="col-12 d-flex justify-content-center">
+            <div class="card" style="width: 60%;">
+                <img src="{{movie.poster}}" class="card-img-top" alt="{{movie.title}}">
+                <div class="card-body">
+                  <h5 class="card-title">{{movie.title}}</h5>
+                  <p class="card-text">{{movie.description}}</p>
+                </div>
+                <ul class="list-group list-group-flush">
+                  <li class="list-group-item"><span class="badge badge-light text-info">Release year</span> {{movie.year}}</li>
+                  <li class="list-group-item"><span class="badge badge-light text-info">Duration</span> {{movie.runtime}} min</li>
+                  <li class="list-group-item"><span class="badge badge-light text-info">Rating</span> {{movie.rating}}</li>
+                  <li class="list-group-item"><span class="badge badge-light text-info">Director</span> {{movie.director}}</li>
+                </ul>
+                <div class="p-3">
+                    <p><span class="text-info font-weight-bold">Actors</span></p>
+                    <ul class="list-group list-group-flush">
+                        {% for actor in movie.actors.all%}
+                        <li class="list-group-item"> {{actor.name}}{% if not forloop.last %}, {% endif %}</li>
+                        {% endfor %}
+                    </ul>
+                    
+                </div>
+                <hr>
+                <div class="card-body">
+                    <p>{{movie.description}}</p>
+                  
+                </div>
+              </div>
+            <!-- <div>
+                <h1>{{movie.title}}</h1>
+                <h2>Rating: {{movie.rating}}</h2>
+                <img class="home-img" src="{{movie.poster}}" alt="{{movie.title}}">
+                <div>
+                    <div>Release year: {{movie.year}}</div>
+                    <div>Duration: {{movie.runtime}}</div>
+                    <div>Rating: {{movie.rating}}</div>
+                </div>
+                <div>
+                    <div>Director: {{movie.director}}</div>
+                    <div>Actors:
+                        {% for actor in movie.actors.all%}
+                        {{actor.name}}{% if not forloop.last %}, {% endif %}
+                        {% endfor %}
+                    </div>
+                    <p>{{movie.description}}</p>
+                </div>
+            </div> -->
+        </div>
+    </div>
+</div>
+</div>
 
-    <script>
-        function switchVideo(status) {
-            if (status == "fragman") {
-                document.getElementById("video").src = "https://www.youtube.com/embed/{{movie.trailer}}?autoplay=1&mute=1";
-            } else if (status == "movie") {
-                document.getElementById("video").src = "https://www.youtube.com/embed/{{movie.link}}?autoplay=1&mute=1";
-            }
+<script>
+    function switchVideo(status) {
+        if (status == "fragman") {
+            document.getElementById("video").src = "https://www.youtube.com/embed/{{movie.trailer}}?autoplay=1&mute=1";
+        } else if (status == "movie") {
+            document.getElementById("video").src = "https://www.youtube.com/embed/{{movie.link}}?autoplay=1&mute=1";
         }
-    </script>
+    }
+</script>
 
 
 {% endblock %}
