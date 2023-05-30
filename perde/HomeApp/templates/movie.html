@@ -65,8 +65,46 @@
                     <p>{{movie.description}}</p>
                 </div>
             </div> -->
+            
+                
         </div>
+        <h3>Comments</h3>
+    
+                {% if movie.comments.all %}
+                {% for comment in movie.comments.all %}
+                    <div>
+                        <p>
+                            <b>{{comment.user}}: </b>{{comment.comment}} - {{comment.created_date}}
+                            {% if user.is_authenticated %}
+                                {% if user == comment.user %}
+                                    <a href="{% url 'delete-comment' movie.title %}">Delete</a>
+                                {% endif %}
+                            {% endif %}
+                        </p>
+                        <hr>
+                    </div>
+                {% endfor %}
+                {% else %}
+                    <p>No comments yet</p>
+                {% endif %}
+    
+                {% if user.is_authenticated %}
+    
+                    <h3>Add Comment</h3>
+                    <form action="{% url 'add-comment' movie.title %}" method="POST">
+                    {% csrf_token %}
+                    <div>
+                        <textarea name="comment" id="comment" cols="30" rows="10"></textarea>
+                        <br>
+                        <input type="submit" value="Add Comment">
+                    </div>
+                    </form>  
+    
+                {% else %}
+                    <a href="{% url 'login' %}">Login to add comment</a>
+                {% endif %}
     </div>
+    
 </div>
 </div>
 
