@@ -1,6 +1,9 @@
 from django.contrib import admin
 
 from .models import Movie, Rating, Watchlist, Comment, Genre, Director, Actor
+from django.contrib import admin
+from django.contrib.auth.admin import UserAdmin
+from .models import User
 
 @admin.register(Movie)
 class MovieAdmin(admin.ModelAdmin):

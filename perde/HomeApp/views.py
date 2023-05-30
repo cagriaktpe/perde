@@ -6,6 +6,41 @@ from django.contrib.auth.models import User
 from django.contrib.auth import login as auth_login, authenticate, logout as auth_logout
 from django.contrib import messages
 from .filters import FilterMovie
+from .models import Movie
+from .forms import RegisterForm, LoginForm
+from django.shortcuts import render, redirect
+from django.contrib.auth.models import User
+from django.contrib.auth import login as auth_login, authenticate, logout as auth_logout
+from django.contrib import messages
+from .forms import UserProfileForm
+from django.contrib.auth.decorators import login_required
+
+
+'''@login_required
+def profile(request):
+    if request.method == 'POST':
+        form = UserProfileForm(request.POST, instance=request.user)
+        if form.is_valid():
+            form.save()
+            return redirect('profile')
+    else:
+        form = UserProfileForm(instance=request.user)
+    return render(request, 'profile.html', {'form': form})
+'''
+def profile(request):
+    user_profile = request.user.userprofile
+    form = UserProfileForm(instance=user_profile)
+
+    if request.method == 'POST':
+        form = UserProfileForm(request.POST, instance=user_profile)
+        if form.is_valid():
+            form.save()
+            return redirect('profile')  # Profil sayfasına yönlendirme yapabilirsiniz
+
+    return render(request, 'profile.html', {'form': form})
+
+
+
 
 def searchMovie(request):
     movie = Movie.objects.all()
