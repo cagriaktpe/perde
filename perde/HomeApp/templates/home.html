@@ -1,9 +1,38 @@
 {% extends 'base.html' %}
 {% block content %}
-<div>
-        <h1>Welcome to Perde!</h1>
+<div class="container  d-flex justify-content-center mt-1 mb-1">
+    <div class="row align-self-center">
+        <div class="col">
+            {% for movie in movies %}
+            <!-- <div class="card p-1" style="width: 18rem;"> -->
+            <!-- <img src="{{ movie.poster }}" class="card-img-top" alt="{{ movie.title }}">
+            <div class="card-body">
+              <h5 class="card-title">{{ movie.title }}</h5>
+              <p class="card-text">{{movie.description}}</p>
+              <a href="{% url 'movie' movie.title %}" class="btn btn-primary">Go to movie</a>
+            </div>
+          </div> -->         
+            <div class="card mb-3" style="max-width: 75%;">
+                <div class="row g-0">
+                    <div class="col-md-4">
+                        <img src="{{ movie.poster }}" class="img-fluid rounded-start" alt="{{ movie.title }}">
+                    </div>
+                    <div class="col-md-8">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ movie.title }}</h5>
+                            <p class="card-text" id="movie-description">{{movie.description|truncatechars:400}}</p>
+                            <a href="{% url 'movie' movie.title %}" class="btn btn-primary">Go to movie</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+<!-- <h1>Welcome to Perde!</h1> -->
 
-        <ul>
+<!-- <ul>
         {% for movie in movies %}
             <a href="{% url 'movie' movie.title %}">
                 <li>
@@ -12,6 +41,10 @@
                 </li>
             </a>
         {% endfor %}
-        </ul>
-</div>
+        </ul> -->
+
 {% endblock %}
+
+<script>
+    var description = document.getElementById("movie-description")
+</script>

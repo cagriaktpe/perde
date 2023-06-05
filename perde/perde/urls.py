@@ -29,4 +29,8 @@ urlpatterns = [
     path('searchMovie/movies/', HomeApp.views.movie, name='movie'),
     path('add-comment/<str:movie_name>', HomeApp.views.add_comment, name='add-comment'),
     path('delete-comment/<str:movie_name>/', HomeApp.views.delete_comment, name='delete-comment'),
+    path('aboutus/', HomeApp.views.aboutus, name='aboutus'),
+    path('rate/<str:movie_name>', HomeApp.views.rate, name='rate'),
+    path('profile/', HomeApp.views.profile, name='profile'),
+
 ]
