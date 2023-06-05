@@ -14,6 +14,7 @@ from django.contrib.auth import login as auth_login, authenticate, logout as aut
 from django.contrib import messages
 from .forms import UserProfileForm
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.hashers import make_password
 
 
 '''@login_required
@@ -75,6 +76,9 @@ def register(request):
             if User.objects.filter(username=username).exists():
                 messages.info(request, 'Username already exists')
                 return render(request, 'register.html', {'form': form})
+
+            #passwordu hashle
+            password = make_password(password)
 
             newUser = User(username=username, email=email, password=password)
             newUser.save()
