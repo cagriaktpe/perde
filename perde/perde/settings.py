@@ -40,7 +40,10 @@ INSTALLED_APPS = [
     'HomeApp',
     'django_filters',
     
+    
 ]
+
+
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
