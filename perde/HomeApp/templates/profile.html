@@ -1,0 +1,72 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block style %}
+<link rel="stylesheet" href="{% static 'profile.css' %}">
+{% endblock %}
+
+{% block content %}
+
+<div class="container">
+  <h1 class="mt-5 mb-3">Profile</h1>
+
+<div class="profile-container">
+    {% if editing %}
+      <div class="form-container">
+        <form method="post">
+          {% csrf_token %}
+          {{ form.as_p }}
+          <div class="button-container">
+            <button class="update-btn" type="submit">Update Profile</button>
+            <a href="{% url 'profile' %}" class="cancel-btn">Cancel</a>
+          </div>
+        </form>
+      </div>
+    {% else %}
+      <div class="info-container">
+        <table>
+          <tr>
+            <td class="label">Name:</td>
+            <td>{{ user.first_name }}</td>
+          </tr>
+          <tr>
+            <td class="label">Surname:</td>
+            <td>{{ user.last_name }}</td>
+          </tr>
+          <tr>
+            <td class="label">Joined Date:</td>
+            <td>{{ user.date_joined }}</td>
+          </tr>
+          <tr>
+            <td class="label">Email:</td>
+            <td>{{ user.email }}</td>
+          </tr>
+          
+        </table>
+        <button class="edit-btn" onclick="editProfile()">Edit</button>
+      </div>
+    {% endif %}
+  </div>
+
+  <script>
+    function editProfile() {
+      var form = document.createElement("form");
+      form.method = "post";
+      form.action = "{% url 'profile' %}";
+      form.className = "form-container";
+      form.innerHTML = `
+        {% csrf_token %}
+        {{ form.as_p }}
+        <div class="button-container">
+          <button class="update-btn" type="submit">Update Profile</button>
+          <a href="{% url 'profile' %}" class="cancel-btn">Cancel</a>
+        </div>
+      `;
+      document.querySelector(".info-container").replaceWith(form);
+    }
+  </script>
+</div>
+
+
+{% endblock %}
