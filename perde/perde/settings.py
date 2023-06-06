@@ -27,7 +27,7 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
-
+AUTH_PROFILE_MODULE = 'perde.UserProfile'
 # Application definition
 
 INSTALLED_APPS = [
@@ -40,7 +40,10 @@ INSTALLED_APPS = [
     'HomeApp',
     'django_filters',
     
+    
 ]
+
+
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',

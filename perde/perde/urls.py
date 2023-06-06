@@ -16,7 +16,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 
-import HomeApp.views
+import HomeApp.views 
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -30,4 +30,8 @@ urlpatterns = [
     path('add-comment/<str:movie_name>', HomeApp.views.add_comment, name='add-comment'),
     path('delete-comment/<str:movie_name>/', HomeApp.views.delete_comment, name='delete-comment'),
     path('aboutus/', HomeApp.views.aboutus, name='aboutus'),
+    path('rate/<str:movie_name>', HomeApp.views.rate, name='rate'),
+    path('delete-rating/<str:movie_name>/', HomeApp.views.delete_rating, name='delete-rating'),
+    path('profile/', HomeApp.views.profile, name='profile'),
+
 ]

@@ -1,4 +1,40 @@
 from django.db import models
+from django.contrib.auth.models import User
+
+from django.db.models.signals import post_save
+from django.dispatch import receiver
+
+
+from django.db.models.signals import pre_save
+class UserProfile(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    #custom_field = models.CharField(max_length=100)
+    ad = models.CharField(max_length=50)
+    soyad = models.CharField(max_length=50)
+    dogum_tarihi = models.DateField(null=True, blank=True)
+    # Diğer profil alanlarını burada tanımlayabilirsiniz (örneğin: ad, soyad, doğum tarihi, vb.)
+
+    def __str__(self):
+        return self.user.username
+
+    def save(self, *args, **kwargs):
+        if self.ad != self.user.first_name:
+            self.user.first_name = self.ad
+            self.user.save()
+        if self.soyad != self.user.last_name:
+            self.user.last_name = self.soyad
+            self.user.save()
+        super().save(*args, **kwargs)
+
+
+@receiver(post_save, sender=User)
+def create_user_profile(sender, instance, created, **kwargs):
+    if created:
+        UserProfile.objects.create(user=instance)
+
+@receiver(post_save, sender=User)
+def save_user_profile(sender, instance, **kwargs):
+    instance.userprofile.save()
 
 class Director(models.Model):
     name = models.CharField(max_length=100)
@@ -23,7 +59,7 @@ class Movie(models.Model):
     title = models.CharField(max_length=100)
     description = models.TextField()
     year = models.IntegerField()
-    rating = models.FloatField()
+    rating = models.FloatField()  
     genre = models.ManyToManyField(Genre, related_name='movies')
     director = models.ForeignKey(Director, on_delete=models.CASCADE, related_name='movies')
     actors = models.ManyToManyField(Actor, related_name='movies')
@@ -56,10 +92,5 @@ class Comment(models.Model):
 
     def __str__(self):
         return self.comment
-
-
-
-
-
 
 
