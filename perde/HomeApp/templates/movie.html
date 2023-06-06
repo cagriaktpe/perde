@@ -94,7 +94,11 @@
                     <div>
                         <p>
                             <b>{{rating.user}}</b> rated {{rating.rating}} for this movie.
-                            
+                            {% if user.is_authenticated %}
+                                {% if user == rating.user %}
+                                    <a href="{% url 'delete-rating' movie.title %}">Delete</a>
+                                {% endif %}
+                            {% endif %}
                         </p>
                         <hr>
                     </div>

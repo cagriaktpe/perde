@@ -146,3 +146,9 @@ def rate(request, movie_name):
     else:
         movie.ratings.create(user=request.user, rating=rate)
     return redirect('movie', movie_name=movie_name)
+
+def delete_rating(request, movie_name):
+    movie_name = movie_name.lower().capitalize()
+    movie = Movie.objects.get(title=movie_name)
+    movie.ratings.filter(user=request.user).delete()
+    return redirect('movie', movie_name=movie_name)
