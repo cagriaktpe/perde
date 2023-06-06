@@ -16,40 +16,86 @@
 {% block content %}
 <h1 align ="center ">Search Movie Info </h1>
 
-<form method = "get">
-    {{filters.form}}
-    <input type="submit" value= "Search" name="" >
+<div class="container">
+    <div class="card mb-4">
+        <div class="card-body">
+            <h5 class="card-title">Search Movies</h5>
+            <form method="get" class="mb-3">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="mb-3 me-2">
+                            <label for="id_director" class="form-label me-2">Director</label>
+                            <select id="id_director" name="director" class="form-control">
+                                {% for choice in filters.form.director.field.choices %}
+                                    <option value="{{ choice.0 }}"{% if filters.form.director.value == choice.0 %} selected{% endif %}>{{ choice.1 }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div class="mb-3 me-2">
+                            <label for="id_genre" class="form-label me-2">Genre</label>
+                            <select id="id_genre" name="genre" class="form-control">
+                                {% for choice in filters.form.genre.field.choices %}
+                                    <option value="{{ choice.0 }}"{% if filters.form.genre.value == choice.0 %} selected{% endif %}>{{ choice.1 }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="mb-3 me-2">
+                            <label for="id_year" class="form-label me-2">Year</label>
+                            <input type="number" id="id_year" name="year" value="{{ filters.form.year.value }}" class="form-control">
+                        </div>
+                        <div class="mb-3 me-2">
+                            <label for="id_rating__gte" class="form-label me-2">Rating (Greater than or Equal)</label>
+                            <input type="number" id="id_rating__gte" name="rating__gte" value="{{ filters.form.rating__gte.value }}" class="form-control">
+                        </div>
+                        <div class="mb-3 me-2">
+                            <label for="id_rating__lte" class="form-label me-2">Rating (Less than or Equal)</label>
+                            <input type="number" id="id_rating__lte" name="rating__lte" value="{{ filters.form.rating__lte.value }}" class="form-control">
+                        </div>
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-primary mb-3">Search</button>
+            </form>
+        </div>
+    </div>
 
-</form>
+    <div class="card">
+        <div class="card-body">
+            <h5 class="card-title">Movies</h5>
+            <table class="table table-striped table-hover">
+                <thead>
+                    <tr>
+                        <th scope="col">Title</th>
+                        <th scope="col">Director</th>
+                        <th scope="col">Genre</th>
+                        <th scope="col">Year</th>
+                        <th scope="col">Rating</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for item in filters.qs %}
+                    <tr>
+                        <td><a href="/movie/{{item.title}}">{{item.title}}</a></td>
+                        <td>{{item.director}}</td>
+                        <td>
+                            {% for genre in item.genre.all %}
+                            {{ genre.name }}{% if not forloop.last %}, {% endif %}
+                            {% endfor %}
+                        </td>
+                        <td>{{item.year}}</td>
+                        <td>{{item.rating}}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
 
-<hr>
-
-<form method="get">
-<table border = "1">
-    <tr>
-        <td>Title </td>
-        <td>Director</td>
-        <td>Genre</td>
-        <td>Year</td>
-        <td>Rating</td>
-    </tr>
-{% for item in filters.qs %}
-    <tr>
-        <td><a href="/movie/{{item.title}}">{{item.title}}</a></td>
-        <td>{{item.director}}</td>
-        <td>{% for genre in item.genre.all %}
-            {{ genre.name }}
-            {% if not forloop.last %},{% endif %}
-        {% endfor %}</td>
-        <td>{{item.year}}</td>
-        <td>{{item.rating}}</td>
-    </tr>
-{% endfor %}
-</table>
+<!-- <hr> -->
 
 
-
-</form>
 {% endblock %}
 
 </html>
